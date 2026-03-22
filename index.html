@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sorting Algorithms</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        color: #333;
+    }
+
+    header {
+        background-color: #007bff;
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+    }
+
+    main {
+        padding: 20px;
+    }
+
+    section {
+        margin-bottom: 20px;
+    }
+
+    .sorting-steps {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    footer {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        text-align: center;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+</style>
+
+</head>
+<body>
+<script>
+// Function prototypes
+function selectionSort(arr, n) {
+    // implementation of selection sort
+    for (let i = 0; i < n - 1; i++) {
+        let minIndex = i;
+        for (let j = i + 1; j < n; j++) {
+            if (arr[j] < arr[minIndex]) {
+                minIndex = j;
+            }
+        }
+        [arr[i], arr[minIndex]] = [arr[minIndex], arr[i]]; // swap
+        document.write(`Step ${i + 1}: ${arr.join(' ')}<br>`);
+    }
+}
+
+function bubbleSort(arr, n) {
+    // implementation of bubble sort
+    for (let i = 0; i < n - 1; i++) {
+        for (let j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]; // swap
+            }
+        }
+        document.write(`Step ${i + 1}: ${arr.join(' ')}<br>`);
+    }
+}
+
+function insertionSort(arr, n) {
+    // implementation of insertion sort
+    for (let i = 1; i < n; i++) {
+        let key = arr[i];
+        let j = i - 1;
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = key;
+        document.write(`Step ${i}: ${arr.join(' ')}<br>`);
+    }
+}
+
+function quickSort(arr, low, high) {
+    // implementation of quick sort
+    if (low < high) {
+        let pi = partition(arr, low, high);
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+
+function partition(arr, low, high) {
+    let pivot = arr[high];
+    let i = low - 1;
+    for (let j = low; j <= high - 1; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            [arr[i], arr[j]] = [arr[j], arr[i]]; // swap
+        }
+    }
+    [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]]; // swap
+    return i + 1;
+}
+
+function printArray(arr) {
+    document.write(`${arr.join(' ')}<br>`);
+}
+
+let arr = [];
+let n = 7;
+
+document.write("Enter 7 elements for the array:<br>");
+for (let i = 0; i < n; i++) {
+    arr.push(parseInt(prompt("Enter element " + (i + 1))));
+    document.write(`Element ${i + 1}: ${arr[i]}<br>`);
+}
+
+let choice = parseInt(prompt("Choose sorting algorithm:\n1. Selection Sort\n2. Bubble Sort\n3. Insertion Sort\n4. Quick Sort"));
+switch (choice) {
+    case 1:
+        document.write("Sorting using Selection Sort:<br>");
+        selectionSort(arr, n);
+        break;
+    case 2:
+        document.write("Sorting using Bubble Sort:<br>");
+        bubbleSort(arr, n);
+        break;
+    case 3:
+        document.write("Sorting using Insertion Sort:<br>");
+        insertionSort(arr, n);
+        break;
+    case 4:
+        document.write("Sorting using Quick Sort:<br>");
+        quickSort(arr, 0, n - 1);
+        break;
+    default:
+        document.write("Invalid choice<br>");
+}
+
+document.write("Sorted array:<br>");
+printArray(arr);
+</script>
+</body>
+</html>
